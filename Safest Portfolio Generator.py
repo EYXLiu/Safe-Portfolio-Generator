@@ -1,22 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
+#import required modules
 from IPython.display import display, Math, Latex
-
 import pandas as pd
-import numpy as np
-import numpy_financial as npf
 import yfinance as yf
-import matplotlib.pyplot as plt
-from datetime import datetime
-import random
-
-
-# In[ ]:
-
 
 #total number of stocks you want in the portfolio
 #in terms of diversification, the more the better
@@ -31,10 +16,6 @@ dayafterinvestment = '2023-10-26'
 #optional, just to test the overall percent change
 #to use, uncomment this and the ending code 
 #endinginvestmentday = '2023-12-03'
-
-
-# In[ ]:
-
 
 def get_average__monthly_volume(stock_volume):
     # # get the ticker
@@ -55,10 +36,6 @@ def get_average__monthly_volume(stock_volume):
 
     # return the result
     return stock_volume.sum()/len(valid_months)
-
-
-# In[ ]:
-
 
 def validtickers(df):
     ticker_lst = []
@@ -100,10 +77,6 @@ def validtickers(df):
 
 tickerlist = validtickers(pd.read_csv('Tickers.csv'))
 #print(tickerlist)
-
-
-# In[ ]:
-
 
 stocklist = pd.DataFrame(columns=['Ticker', 'Currency', 'CompanyName', 'Industry'])
 cad = 0
@@ -156,10 +129,6 @@ else:
             stocklist = pd.concat([stocklist, tempdf1], ignore_index=True)   
         
 #print(stocklist)
-
-
-# In[ ]:
-
 
 #create a list for each sector to store the stock tickers in 
 Health = []
@@ -218,19 +187,11 @@ print(RealEst)
 print(Indus)
 '''
 
-
-# In[ ]:
-
-
 flatstocklist = []
 #flatten out the stocklist
 for i in industrylist:
     flatstocklist.extend(i)
 #print(flatstocklist)
-
-
-# In[ ]:
-
 
 #evens out the number of stocks per sector, only while the number of stocks is higher than wanted
 #while the number of stocks is higher than the wanted number, takes the sector with the most stocks and removes the one 
@@ -253,10 +214,6 @@ while len(flatstocklist) > numberofstocks:
     industrylist[maxindex] = [item for item in industrylist[maxindex] if item != l]
 #print(flatstocklist)
 
-
-# In[ ]:
-
-
 #to get the final weighting, we take the standard deviation of the percent change and add the beta to it
 #since we want low percent change and low beta, we divide one by the total, so the lower the number, the higher the weighting
 n = 0
@@ -276,10 +233,6 @@ for q in range(len(weightinglist)):
     weightinglist[q] = weightinglist[q]/n
 #print(weightinglist)
 
-
-# In[ ]:
-
-
 #output a csv file with the dataframe of Ticker and Number of shares bought 
 Stock_Final = pd.DataFrame(columns=['Ticker','Shares'])
 for r in range(len(weightinglist)):
@@ -288,10 +241,6 @@ for r in range(len(weightinglist)):
     s = (weightinglist[r]*startinginvestment)/morningprice
     Stock_Final.loc[len(Stock_Final)] = [flatstocklist[r], s]
 Stock_Final.to_csv('Stocks.csv')
-
-
-# In[ ]:
-
 
 '''
 #test safety
@@ -304,4 +253,3 @@ overallchange = (test.iloc[len(test)-1,len(test.columns)-1]-test.iloc[0,len(test
 overallchange *= 100
 print(f'{overallchange.round(2)}%') 
 '''
-
