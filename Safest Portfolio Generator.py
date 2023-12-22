@@ -206,7 +206,7 @@ while len(flatstocklist) > numberofstocks:
     for j in moststocks:
         ticker = yf.Ticker(j)
         m = ticker.history(start=testinvestmentstart, end=testinvestmentend).Close
-        m = m.iloc[0,0]
+        m = m.iloc[0]
         if m > k:
             k = m
             l = j
