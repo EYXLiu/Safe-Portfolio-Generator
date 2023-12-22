@@ -1,5 +1,4 @@
 #import required modules
-from IPython.display import display, Math, Latex
 import pandas as pd
 import yfinance as yf
 
