@@ -16,6 +16,8 @@ dayafterinvestment = '2023-10-26'
 #optional, just to test the overall percent change
 #to use, uncomment this and the ending code 
 #endinginvestmentday = '2023-12-03'
+#name of the csv file 
+csvfilename = 'Tickers.csv'
 
 def get_average__monthly_volume(stock_volume):
     # # get the ticker
@@ -75,7 +77,7 @@ def validtickers(df):
 
     return ticker_lst
 
-tickerlist = validtickers(pd.read_csv('Tickers.csv'))
+tickerlist = validtickers(pd.read_csv(csvfilename))
 #print(tickerlist)
 
 stocklist = pd.DataFrame(columns=['Ticker', 'Currency', 'CompanyName', 'Industry'])
