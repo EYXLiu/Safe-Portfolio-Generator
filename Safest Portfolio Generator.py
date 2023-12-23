@@ -9,12 +9,9 @@ numberofstocks = 22
 startinginvestment = 750000
 testinvestmentstart = '2023-01-01'
 testinvestmentend = '2023-10-01'
-startinginvestmentday = '2023-10-25'
+investmentday = '2023-10-25'
 #to be able to get the history data, we need the next day 
 dayafterinvestment = '2023-10-26'
-#optional, just to test the overall percent change
-#to use, uncomment this and the ending code 
-#endinginvestmentday = '2023-12-03'
 #name of the csv file 
 csvfilename = 'Tickers.csv'
 
@@ -238,13 +235,16 @@ for q in range(len(weightinglist)):
 Stock_Final = pd.DataFrame(columns=['Ticker','Shares'])
 for r in range(len(weightinglist)):
     ticker = yf.Ticker(flatstocklist[r])
-    morningprice = ticker.history(start=startinginvestmentday,end=dayafterinvestment).Close.iloc[0]
+    morningprice = ticker.history(start=investmentday,end=dayafterinvestment).Close.iloc[0]
     s = (weightinglist[r]*startinginvestment)/morningprice
     Stock_Final.loc[len(Stock_Final)] = [flatstocklist[r], s]
 Stock_Final.to_csv('Stocks.csv')
 
 '''
-#test safety
+optional, just to test the overall percent change
+to use, uncomment this and the ending code 
+startinginvestmentday = '2023-11-26'
+endinginvestmentday = '2023-12-03'
 test = pd.DataFrame()
 for t in range(len(Stock_Final)):
     ticker = yf.Ticker(Stock_Final.iloc[t,0])
